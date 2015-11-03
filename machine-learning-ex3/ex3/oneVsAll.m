@@ -49,7 +49,10 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
-
+% Initialize matrix Y (num_labels x 10)
+Y = 1:9;
+Y = [10 Y];
+Y = repeat(Y, num_labels);
 
 
 
