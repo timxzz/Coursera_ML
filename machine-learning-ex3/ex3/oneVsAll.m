@@ -49,13 +49,22 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
-% Initialize matrix Y (num_labels x 10)
-Y = 1:9;
-Y = [10 Y];
-Y = repeat(Y, num_labels);
+% Initialize matrix Y (m x num_labels)
+ym = 1:num_labels;
+ym = repmat(ym, m, 1);
+Y = zeros(m,num_labels);
+for i=1:m
+    Y(i,:) = ym(i,:) == y(i);
+end
 
-
-
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+for k=1:num_labels
+    initial_theta = zeros(n + 1, 1);
+    [theta] = ...
+        fmincg (@(t)(lrCostFunction(t, X, Y(:,k), lambda)), ...
+                initial_theta, options);
+    all_theta(k,:) = theta;
+end
 
 
 
