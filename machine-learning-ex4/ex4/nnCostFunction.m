@@ -62,11 +62,14 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-% --------Cost--------
+% --------FeedForward & Cost--------
 % Convert y in to matrix
 Y = 1:num_labels;
 Y = repmat(Y, m, 1);
-Y = (Y == y);
+for i = 1:m
+    Y(i,:) = Y(i,:) == y(i);
+end
+
 % Calculate the cost without regularization
 X = [ones(m, 1) X];
 a2 = [ones(m, 1) sigmoid(X * Theta1')];
@@ -78,6 +81,23 @@ j1 = Theta1(:, 2:end) .^ 2;
 j2 = Theta2(:, 2:end) .^ 2;
 J = J + (sum(j1(:)) + sum(j2(:))) * lambda / (2 * m);
 
+% --------BP---------
+
+% num_labels x m
+delta3 = a3' - Y';
+% (hidden_layer_size + 1) x m
+delta2 = (Theta2' * delta3) .* [ones(m, 1) sigmoidGradient(X * Theta1')]'; 
+% hidden_layer_size x m
+delta2 = delta2(2:end, :);
+
+% hidden_layer_size x (input_layer_size + 1)
+Delta1 = delta2 * X;
+
+% num_labels x hidden_layer_size
+Delta2 = delta3 * a2;
+
+Theta1_grad = Delta1 ./ m;
+Theta2_grad = Delta2 ./ m;
 
 
 
