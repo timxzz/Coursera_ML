@@ -62,10 +62,21 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-
-
-
-
+% --------Cost--------
+% Convert y in to matrix
+Y = 1:num_labels;
+Y = repmat(Y, m, 1);
+Y = (Y == y);
+% Calculate the cost without regularization
+X = [ones(m, 1) X];
+a2 = [ones(m, 1) sigmoid(X * Theta1')];
+a3 = sigmoid(a2 * Theta2');
+j = ((-Y .* log(a3)) - ((1 - Y) .* log(1 - a3)));
+J = sum(j(:)) / m;
+% Add regularization
+j1 = Theta1(:, 2:end) .^ 2;
+j2 = Theta2(:, 2:end) .^ 2;
+J = J + (sum(j1(:)) + sum(j2(:))) * lambda / (2 * m);
 
 
 
