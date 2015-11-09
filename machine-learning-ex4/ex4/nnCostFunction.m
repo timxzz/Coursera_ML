@@ -99,7 +99,9 @@ Delta2 = delta3 * a2;
 Theta1_grad = Delta1 ./ m;
 Theta2_grad = Delta2 ./ m;
 
-
+% Add regularization
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + (Theta1(:, 2:end) .* (lambda / m));
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + (Theta2(:, 2:end) .* (lambda / m));
 
 
 
