@@ -9,7 +9,7 @@ function [C, sigma] = dataset3Params(X, y, Xval, yval)
 
 % You need to return the following variables correctly.
 C = 1;
-sigma = 0.3;
+sigma = 0.1;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return the optimal C and sigma
@@ -23,11 +23,27 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
-
-
-
-
-
+% % Generate all pairs of C and sigma
+% v1 = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+% v2 = v1;
+% [C, sigma] = meshgrid(v1, v2);
+% C = C(:);
+% sigma = sigma(:);
+% 
+% % Trian
+% 
+% %models = zeros(length(C),1);
+% accuracies = zeros(length(C), 1);
+% for i = 1:length(C)
+%   i
+%   model = svmTrain(X, y, C(i), @(x1, x2) gaussianKernel(x1, x2, sigma(i)));
+%   prediction = svmPredict(model, Xval);
+%   accuracies(i,1) = mean(double(prediction ~= yval));
+% end
+% 
+% [minAccu minIndex] = min(accuracies);
+% C = C(minIndex)
+% sigma = sigma(minIndex)
 
 % =========================================================================
 

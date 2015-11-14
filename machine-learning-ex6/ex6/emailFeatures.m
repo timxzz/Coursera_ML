@@ -48,7 +48,8 @@ x = zeros(n, 1);
 %
 %
 
-
+indices = 1:n;
+x = ismember(indices, word_indices);
 
 
 
